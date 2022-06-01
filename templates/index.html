@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<title>CTE Explorer</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://unpkg.com/d3-dag@0.7.0"></script>
+<link href="/static/css/main.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js" type="text/javascript" charset="utf-8"></script> 
+<!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+ <!-- Compiled and minified JavaScript -->
+
+<body>
+  <header>
+     <h4>
+      <i class="material-icons">location_searching</i>
+      <b>CTE Explorer</b></h4>
+    
+      <h5> <i class="material-icons">code</i> / {{model_name}} <strong id = "cte_name"></strong>
+      </h5>
+      
+      
+  </header>
+
+
+  <a class="waves-effect waves-light btn" onClick="startNewCode()"><i class="material-icons left">edit</i>New Code</a>
+
+ 
+  <div class=" text-center" id="main"> 
+    <div class="row">
+      
+    
+    </div>  
+    <div class="row">
+      <div class ="col s2"> 
+        <ul class="collection with-header">
+          <li class="collection-header"><h6><i class="material-icons left tiny">folder</i>Saved Models</h6></li>
+          
+          {% for model in saved_models %}
+           <li class="collection-item">
+             <i class="material-icons left tiny">insert_drive_file</i>
+             <a href="/model/{{model}}">{{model}}</a></li>
+          {% endfor %}
+        </ul>
+            
+        
+      </div>
+      <div class="col s3"> 
+        <DIV id="model_info" class="info ">{{model_name}} code <i class="material-icons left tiny">lock_outline</i></DIV>
+        <div id="editor2">{{model_code}}</div>
+      </div>
+      <div class="col s3">
+        <DIV class="info col2">selected cte code</DIV>
+        <div id="editor"></div>
+        <table id="cte_cols">
+          <tr>
+            <th>Column Name
+            <th>code
+          </tr>
+          <tbody id="cte_col">
+          </tbody>
+        </table>
+        <script src="/static/js/dag.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+        <script>
+          var editor = ace.edit("editor");
+          editor.setTheme("ace/theme/twilight");
+          editor.session.setMode("ace/mode/sql");
+          editor.session.setUseSoftTabs(true);
+          editor.setReadOnly(true);
+          editor.setValue("select a cte to view the code",-1)
+        
+          var editor2 = ace.edit("editor2")
+          editor2.setTheme("ace/theme/twilight");
+          editor2.session.setMode("ace/mode/sql");
+          editor2.session.setUseSoftTabs(true);
+          editor2.setReadOnly(true);
+
+          const current_page = window.location.href.split('/')
+          const current_model = current_page[current_page.length - 1]
+
+        if (current_model == 'adhoc') {
+    
+          d3.json("/get-model-json/adhoc").then((data) => {
+            var d = {{ model_adhoc|safe }};
+            build_dag(d)
+          
+          });
+        } else {
+          d3.json("/get-model-json/" + current_model).then((data) => {build_dag(data)});
+        }
+
+         
+        </script>
+      </div>
+      <div class="col s4 dag_container" id="cte_dag">
+
+      </div>
+</divs>
+    
+     
+</body>
+
+</html>

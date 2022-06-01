@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>CTE Explorer</title>
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+        <script src="https://unpkg.com/d3-dag@0.7.0"></script>
+        <link href="/static/css/main.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js" type="text/javascript" charset="utf-8"></script> 
+        <!-- Compiled and minified CSS -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+         <!-- Compiled and minified JavaScript -->  </head>
+    <body>
+        <header>
+            <h4>
+             <i class="material-icons">location_searching</i>
+             <b>CTE Explorer</b></h4>
+           
+             <h5> <i class="material-icons">code</i> / {{model_name}} <strong id = "cte_name"></strong>
+             </h5>
+             
+             
+         </header>
+       
+            <div class="container">
+                <h3>  {{msg}} </h3> 
+      <strong> select available files below </strong>
+            <ul class="collection with-header">
+                <li class="collection-header"><h6><i class="material-icons left tiny">folder</i>Saved Models</h6></li>
+                
+                {% for model in saved_models %}
+                 <li class="collection-item">
+                   <i class="material-icons left tiny">insert_drive_file</i>
+                   <a href="/model/{{model}}">{{model}}</a></li>
+                {% endfor %}
+              </ul>
+            </DIV>
+    </body>
+    </html>
