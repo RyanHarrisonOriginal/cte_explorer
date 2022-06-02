@@ -31,7 +31,6 @@ The column definitions will be featured below the center text editor
 - Enter your new CTE base SQL script and press the button labeled "Parse" directly above the editor
 - The sql file and corresponding json will be stored in static/model and will appear in list of Saved Models in the app
 
-![cte_explorer_4](https://user-images.githubusercontent.com/98712501/171628566-58b956a4-e5b4-4e2d-ae1c-97482878c755.jpg)
-
+![cte_explorer_4](https://user-images.githubusercontent.com/98712501/171630292-3553e25c-46ab-4e17-972e-df1bfa88dbe4.jpg)
 
 ## Installation
