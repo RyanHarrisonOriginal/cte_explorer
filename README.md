@@ -34,3 +34,13 @@ The column definitions will be featured below the center text editor
 ![cte_explorer_4](https://user-images.githubusercontent.com/98712501/171630292-3553e25c-46ab-4e17-972e-df1bfa88dbe4.jpg)
 
 ## Installation
+
+1. Download this repo to your local machine\
+2. Install requirement
+```
+pip install -r requirements.txt
+```
+3. launch app
+```
+py app.py
+```
