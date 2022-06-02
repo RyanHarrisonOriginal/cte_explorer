@@ -4,8 +4,13 @@
 
 CTE Explorer is a proof-of-concept tool that allows visual exploration of CTE based SQL scripts. 
 
-The tool uses sqlglot to parse SQL scripts to derive directed acyclic graph (DAG) representation of CTE lineage 
+The tool uses sqlglot to parse SQL scripts to derive directed acyclic graph (DAG) representation of CTE lineage
 
+The DAG is created using d3.js
+
+This tool is ideal for massive SQL scripts that leverages CTE's to perform a chain of enrichments and transformation
+
+It provides a digestable visual representation of such scripts.
 
 ## Usage
 
