@@ -1,4 +1,5 @@
 ---------------ENTER YOUR SQL CODE---------------
+---------------ENTER YOUR SQL CODE---------------
 with base_seniors as (
     select
         experience

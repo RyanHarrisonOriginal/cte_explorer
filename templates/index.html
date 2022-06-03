@@ -83,16 +83,9 @@
           const current_page = window.location.href.split('/')
           const current_model = current_page[current_page.length - 1]
 
-        if (current_model == 'adhoc') {
-    
-          d3.json("/get-model-json/adhoc").then((data) => {
-            var d = {{ model_adhoc|safe }};
-            build_dag(d)
-          
-          });
-        } else {
+        
           d3.json("/get-model-json/" + current_model).then((data) => {build_dag(data)});
-        }
+
 
          
         </script>

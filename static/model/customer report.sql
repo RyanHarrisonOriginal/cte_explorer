@@ -1,30 +1,28 @@
 ---------------ENTER YOUR SQL CODE---------------
-WITH Sales_Cust_Join_CTE
-AS (
-   SELECT fs.OrderDateKey
-      ,fs.ProductKey
-      ,fs.OrderQuantity * fs.UnitPrice AS TotalSale
-      ,dc.FirstName
-      ,dc.LastName
-   FROM dbo.FactInternetSales fs
+WITH sales_customer AS (
+   SELECT 
+        fs.OrderDateKey
+        ,fs.ProductKey
+        ,fs.OrderQuantity * fs.UnitPrice AS TotalSale
+        ,dc.FirstName
+        ,dc.LastName
+   FROM dbo.fct_internet_sales fs
    INNER JOIN dbo.DimCustomer dc ON dc.CustomerKey = fs.CustomerKey
-   )
-   ,Date_CTE
-AS (
-   SELECT DateKey
-      ,CalendarYear
+ )
+ , cal_date AS (
+    SELECT 
+        DateKey
+        ,CalendarYear
    FROM dbo.DimDate
    )
- , final as (
-SELECT CalendarYear
-   ,ProductKey
-   ,SUM(TotalSale) AS TotalSales
-FROM Sales_Cust_Join_CTE
-INNER JOIN Date_CTE ON Date_CTE.DateKey = Sales_Cust_Join_CTE.OrderDateKey
-GROUP BY CalendarYear
-   ,ProductKey
-ORDER BY CalendarYear ASC
-   ,TotalSales DESC
-  )
+, final as (
+    SELECT CalendarYear
+        ,ProductKey
+        ,SUM(TotalSale) AS TotalSales
+    FROM sales_customer
+    INNER JOIN cal_date ON cal_date.DateKey = sales_customer.OrderDateKey
+    GROUP BY CalendarYear,ProductKey
+    ORDER BY CalendarYear ASC,TotalSales DESC
+ )
   
   select * from final

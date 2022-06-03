@@ -25,15 +25,15 @@ class CTEParser():
         return column_names if column_names else self.select_star()
 
     def find_tables(self,table_statement):
-        cols = []
+        table_names = []
         if isinstance(table_statement, exp.From):
             for tables in table_statement.find_all(exp.Table):
-                    cols.append(self.table_ref(tables))
+                    table_names.append(self.table_ref(tables))
         if isinstance(table_statement, list):
             for joins in table_statement:
                 for tables in joins.find_all(exp.Table):
-                    cols.append(self.table_ref(tables))
-        return cols
+                    table_names.append(self.table_ref(tables))
+        return table_names
 
     def run(self):
         for cte in sqlglot.parse_one(self.cte_code).find(exp.With).args['expressions']:
