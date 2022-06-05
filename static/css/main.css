@@ -22,7 +22,7 @@ svg {
 
 div.error {
   background-color: rgba(243, 111, 111, 0.89);
-  padding: 2px;
+  padding: 10px;
   font-style: italic;
   color: white;
 
@@ -30,7 +30,7 @@ div.error {
 
 div.success {
   background-color: rgba(44, 216, 67, 0.89);
-  padding: 2px;
+  padding: 10px;
   font-style: italic;
   color: white;
 
