@@ -24,10 +24,17 @@
       
   </header>
 
-
+<div class = "row">
+  <div class = "col s2">
   <a class="waves-effect waves-light btn" onClick="startNewCode()"><i class="material-icons left">edit</i>New Code</a>
+  </div>
+  <div class = "col s3">
 
- 
+  <div class="{{status}}">
+    <pre>{{msg|safe}}</pre>
+  </div>
+</div>
+
   <div class=" text-center" id="main"> 
     <div class="row">
       
@@ -80,11 +87,8 @@
           editor2.session.setUseSoftTabs(true);
           editor2.setReadOnly(true);
 
-          const current_page = window.location.href.split('/')
-          const current_model = current_page[current_page.length - 1]
-
         
-          d3.json("/get-model-json/" + current_model).then((data) => {build_dag(data)});
+          d3.json("/get-model-json/" + "{{model_name|safe}}").then((data) => {build_dag(data)});
 
 
          

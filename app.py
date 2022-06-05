@@ -1,3 +1,4 @@
+from email.policy import default
 from flask import Flask, render_template, request, redirect, jsonify, url_for
 import json
 from os import listdir
@@ -29,8 +30,10 @@ def save_model(model_code, model_name, ftype):
     return True
 
 # home route
-@app.route('/model/<model_name>', methods = ['GET','POST'])
-def index(model_name):
+@app.route('/model/<model_name>')
+@app.route('/model/<model_name>/<msg>/<status>')
+def index(model_name, msg = "", status = ""): 
+
     model_json = []
     path_to_sql = get_model(model_name, 'sql')
     try:
@@ -43,20 +46,25 @@ def index(model_name):
     model_name=model_name, 
     model_code=model_code, 
     model_adhoc=model_json,
+    msg = msg,
+    status = status,
     saved_models=check_sql_models())
 
 @app.route('/submite_new', methods=["GET", "POST"])
 def submit_model():
     model_code = request.form['sql_code']
-    parser = CTEParser(model_code)
-    parser.run()
-    model_json = json.dumps(parser.model) 
     model_name = request.form['filename']
-    save_model(model_code, model_name, 'sql')
-    save_model(model_json, model_name, 'json')
-
-    return redirect(url_for('index', model_name=model_name))
-
+    model_name = model_name.strip(' ')
+    parser = CTEParser(model_code)
+    is_success, msg = parser.run()
+    if is_success:
+        status = 'success'
+        model_json = json.dumps(parser.model) 
+        save_model(model_code, model_name, 'sql')
+        save_model(model_json, model_name, 'json')
+    else:
+        status = 'error'
+    return redirect(url_for('index', model_name=model_name , msg = msg, status = status ))
 
 
 @app.route('/get-model-json/<model_name>', methods=['GET', 'POST'])
