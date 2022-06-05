@@ -1,3 +1,6 @@
+
+[Article on Medium.com](https://medium.com/p/83d06648a0c0)
+
 # CTE Explorer
 
 ## Overview
