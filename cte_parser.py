@@ -73,6 +73,11 @@ class CTEParser():
         return None
 
     def add_base_tables_roots(self):
+        """
+        tables that has no ancestors are base tables 
+        we need to add a node for each base table to be
+        compatible for the d3.js dag
+        """
         base_tables = {}
         for _, model in self.model.items():
 
@@ -91,14 +96,24 @@ class CTEParser():
         return None
 
     def finalize_model_format(self):
+        """
+        reformat the model dict as list of dict object
+        this is for d3.js dag
+        """
         self.model = [v for _, v in self.model.items()]
 
     def scrub_query(self):
+        """
+        remove or convert unsupported syntax to standard sql
+        """
         for syntax, replacement in SQL_SYNTAX_REMOVAL:
             self.cte_code = re.sub(syntax, replacement, self.cte_code)
 
     def run(self):
-
+        """
+        main run  function
+        """
+        
         self.scrub_query()
 
         try:

@@ -47,7 +47,9 @@ def parse_error_json():
 @app.route('/model/<model_name>')
 @app.route('/model/<model_name>/<msg>/<status>')
 def index(model_name, msg="", status=""):
-
+    """
+    main app page where most functionality lives
+    """
     model_json = []
     path_to_sql = get_model(model_name, 'sql')
     try:
@@ -67,6 +69,9 @@ def index(model_name, msg="", status=""):
 
 @app.route('/submite_new', methods=["GET", "POST"])
 def submit_model():
+    """
+    parses sql script and save sql and json file if successful
+    """
     model_code = request.form['sql_code']
     model_name = request.form['filename']
     model_name = model_name.strip(' ')
@@ -99,7 +104,9 @@ def get_json(model_name):
 
 @app.route('/<msg>')
 def home_page(msg="Welcome"):
-
+    """
+    app home page
+    """
     if msg == 'not_found':
         msg = 'SQL File Not Found'
     else:
